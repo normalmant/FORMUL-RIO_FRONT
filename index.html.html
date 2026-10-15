@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyForm | Formulário de Cadastro</title>
+  <style>
+    :root {
+      --background: #0b1222;
+      --surface: rgba(23, 35, 59, 0.82);
+      --border: #2b3d5b;
+      --text: #f4f7ff;
+      --muted: #b8c8e4;
+      --accent: #3182f6;
+      --accent-hover: #1769dc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 100% 0%, rgba(36, 100, 210, 0.28), transparent 35%),
+        radial-gradient(ellipse at 0% 100%, rgba(42, 70, 170, 0.22), transparent 32%),
+        var(--background);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+
+    header {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 18px 7%;
+      border-bottom: 1px solid rgba(150, 177, 220, 0.18);
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover,
+    nav a:focus-visible {
+      color: var(--text);
+    }
+
+    main {
+      width: min(1240px, 100%);
+      flex: 1;
+      margin: 0 auto;
+      padding: 64px 28px;
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      align-items: center;
+      gap: clamp(36px, 6vw, 84px);
+    }
+
+    .intro .eyebrow {
+      margin-bottom: 14px;
+      color: #55a1ff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .intro h1 {
+      max-width: 520px;
+      margin-bottom: 18px;
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      line-height: 1.12;
+      letter-spacing: -1.5px;
+    }
+
+    .intro h1 span {
+      color: #438df7;
+    }
+
+    .intro > p {
+      max-width: 480px;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .benefits {
+      display: grid;
+      gap: 24px;
+      margin-top: 42px;
+    }
+
+    .benefit {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .benefit-mark {
+      width: 44px;
+      height: 44px;
+      flex: 0 0 44px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #39547c;
+      border-radius: 12px;
+      background: rgba(51, 91, 151, 0.18);
+      color: #69a8ff;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .benefit p {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .form-card {
+      padding: clamp(24px, 4vw, 38px);
+      border: 1px solid rgba(115, 145, 195, 0.2);
+      border-radius: 18px;
+      background: var(--surface);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+      backdrop-filter: blur(14px);
+    }
+
+    .form-card h2 {
+      margin-bottom: 5px;
+      font-size: 1.8rem;
+      letter-spacing: -0.6px;
+    }
+
+    .form-description {
+      margin-bottom: 28px;
+      color: var(--muted);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 22px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .field.full-width {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .required {
+      color: #ff9d9d;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid #3a5073;
+      border-radius: 9px;
+      padding: 13px 14px;
+      color: var(--text);
+      background: rgba(11, 19, 35, 0.38);
+      font: inherit;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #91a7c9;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(49, 130, 246, 0.16);
+    }
+
+    textarea {
+      min-height: 112px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 24px;
+      padding: 14px 20px;
+      border: 0;
+      border-radius: 9px;
+      color: white;
+      background: var(--accent);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    button:focus-visible {
+      outline: 3px solid #9bc5ff;
+      outline-offset: 3px;
+    }
+
+    #form-status {
+      margin-top: 14px;
+      color: #9ec5ff;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      padding: 26px 20px;
+      border-top: 1px solid rgba(150, 177, 220, 0.18);
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 850px) {
+      main {
+        grid-template-columns: 1fr;
+        gap: 42px;
+        padding-top: 44px;
+        padding-bottom: 44px;
+      }
+
+      .intro h1 {
+        max-width: 650px;
+      }
+
+      .benefits {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 28px;
+      }
+
+      .benefit {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 560px) {
+      header {
+        padding: 16px 6%;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+      }
+
+      nav {
+        gap: 14px;
+        font-size: 0.88rem;
+      }
+
+      main {
+        padding: 34px 18px;
+      }
+
+      .benefits {
+        grid-template-columns: 1fr;
+      }
+
+      .benefit {
+        flex-direction: row;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full-width {
+        grid-column: auto;
+      }
+
+      .form-card h2 {
+        font-size: 1.55rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="#" aria-label="MyForm, página inicial" style="color: inherit; text-decoration: none;">
+      My<span>Form</span>
+    </a>
+    <nav aria-label="Navegação principal">
+      <a href="#inicio">Início</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <main id="inicio">
+    <section class="intro" id="sobre">
+      <p class="eyebrow">Faça parte da nossa comunidade</p>
+      <h1>Preencha o formulário <span>e comece agora!</span></h1>
+      <p>É rápido, simples e você já dá o primeiro passo para aproveitar tudo o que temos para oferecer.</p>
+
+      <div class="benefits">
+        <div class="benefit">
+          <div class="benefit-mark" aria-hidden="true">01</div>
+          <div>
+            <strong>Processo rápido</strong>
+            <p>Leva apenas alguns minutos.</p>
+          </div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-mark" aria-hidden="true">02</div>
+          <div>
+            <strong>Seus dados protegidos</strong>
+            <p>Cuide dos seus dados com responsabilidade.</p>
+          </div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-mark" aria-hidden="true">03</div>
+          <div>
+            <strong>Suporte sempre</strong>
+            <p>Uma equipe pronta para ajudar.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="form-card" id="contato">
+      <h2>Formulário de Cadastro</h2>
+      <p class="form-description">Preencha os campos abaixo com seus dados.</p>
+
+      <form id="registration-form">
+        <div class="form-grid">
+          <div class="field full-width">
+            <label for="name">Nome completo <span class="required">*</span></label>
+            <input id="name" name="name" type="text" placeholder="Digite seu nome completo" autocomplete="name" required>
+          </div>
+
+          <div class="field">
+            <label for="email">E-mail <span class="required">*</span></label>
+            <input id="email" name="email" type="email" placeholder="exemplo@dominio.com" autocomplete="email" required>
+          </div>
+
+          <div class="field">
+            <label for="phone">Telefone <span class="required">*</span></label>
+            <input id="phone" name="phone" type="tel" placeholder="(00) 00000-0000" autocomplete="tel" required>
+          </div>
+
+          <div class="field full-width">
+            <label for="birthdate">Data de nascimento <span class="required">*</span></label>
+            <input id="birthdate" name="birthdate" type="date" autocomplete="bday" required>
+          </div>
+
+          <div class="field full-width">
+            <label for="message">Mensagem (opcional)</label>
+            <textarea id="message" name="message" placeholder="Escreva sua mensagem aqui..."></textarea>
+          </div>
+        </div>
+
+        <button type="submit">Enviar formulário</button>
+        <p id="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 MyForm. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    const form = document.querySelector("#registration-form");
+    const statusMessage = document.querySelector("#form-status");
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      // Este exemplo apenas demonstra a validação no navegador.
+      // Para salvar os dados, conecte o formulário a um backend.
+      statusMessage.textContent = "Formulário validado! Nenhum dado foi enviado para um servidor.";
+      form.reset();
+    });
+  </script>
+</body>
+</html>
